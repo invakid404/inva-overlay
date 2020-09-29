@@ -1,0 +1,6 @@
+# inva-overlay
+My personal overlay of various Gentoo ebuilds.
+
+## Installation
+Via layman: 
+`root # layman -o https://raw.githubusercontent.com/invakid404/inva-overlay/master/repositories.xml -f -a inva-overlay`
