@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_{7,8} )
 
-inherit optfeature python-single-r1 toolchain-funcs xdg
+inherit python-single-r1 toolchain-funcs xdg
 
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/kovidgoyal/kitty.git"
@@ -96,7 +96,6 @@ src_install() {
 
 pkg_postinst() {
 	xdg_icon_cache_update
-	optfeature "Displaying images in the terminal" virtual/imagemagick-tools
 }
 
 pkg_postrm() {
