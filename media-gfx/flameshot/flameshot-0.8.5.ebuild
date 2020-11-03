@@ -25,14 +25,10 @@ done
 DEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
-	dev-qt/qtsingleapplication[qt5(+),X]
 	dev-qt/qtwidgets:5
-	dev-qt/qtsvg:5
 	dev-qt/qtnetwork:5
-	dbus? (
-		dev-qt/qtdbus:5
-		sys-apps/dbus
-	)
+	dev-qt/qtsvg:5
+	dev-qt/qtdbus:5
 "
 RDEPEND="${DEPEND}"
 BDEPEND="
@@ -51,6 +47,7 @@ src_prepare() {
 		|| die "Numbers of recorded and actual linguas do not match"
 	unset enum
 
+	# Delete unneeded linguas
 	local lingua
 	for lingua in ${FS_LINGUAS}; do
 		if ! use l10n_${lingua/_/-}; then
