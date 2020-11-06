@@ -1,5 +1,5 @@
 # inva-overlay
-My personal overlay of various Gentoo ebuilds.
+My personal overlay of various Gentoo/Funtoo ebuilds.
 
 ## Installation
 Via layman: 
