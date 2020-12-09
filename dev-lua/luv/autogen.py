@@ -27,19 +27,23 @@ async def generate(hub, **pkginfo):
     luv_user = "luvit"
     luv_repo = pkginfo["name"]
     luv_version = await fetch_latest_release(hub, luv_user, luv_repo)
+    luv_ebuild_version = luv_version.replace("-", ".")
     luacompat_user = "keplerproject"
     luacompat_repo = "lua-compat-5.3"
     luacompat_version = await fetch_latest_release(hub, luacompat_user, luacompat_repo)
+    luacompat_ebuild_version = luacompat_version.lstrip("v")
     ebuild = hub.pkgtools.ebuild.BreezyBuild(
         **pkginfo,
-        version=luv_version.replace("-", "."),
-        luacompat_version=luacompat_version.lstrip("v"),
+        version=luv_ebuild_version,
+        luacompat_version=luacompat_ebuild_version,
         artifacts=[
             hub.pkgtools.ebuild.Artifact(
-                url=f"https://github.com/{luv_user}/{luv_repo}/releases/download/{luv_version}/{luv_repo}-{luv_version}.tar.gz"
+                url=f"https://github.com/{luv_user}/{luv_repo}/releases/download/{luv_version}/{luv_repo}-{luv_version}.tar.gz",
+                final_name=f"{luv_repo}-{luv_ebuild_version}.tar.gz"
             ),
             hub.pkgtools.ebuild.Artifact(
-                url=f"https://github.com/{luacompat_user}/{luacompat_repo}/archive/{luacompat_version}.tar.gz"
+                url=f"https://github.com/{luacompat_user}/{luacompat_repo}/archive/{luacompat_version}.tar.gz",
+                final_name=f"{luv_repo}-lua-compat-{luacompat_ebuild_version}.tar.gz"
             )
         ]
     )
