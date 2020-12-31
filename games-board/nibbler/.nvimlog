@@ -1,3 +1,0 @@
-INFO  2020-12-31T12:17:27.141 6789  set_init_2:754: startup runtimepath/packpath value: /root/.config/nvim,/etc/xdg/nvim,/root/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib64/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/root/.local/share/nvim/site/after,/etc/xdg/nvim/after,/root/.config/nvim/after
-INFO  2020-12-31T12:17:27.161 6789  main:559: starting main loop
-INFO  2020-12-31T12:19:48.163 6789  os_exit:586: Nvim exit: 0
