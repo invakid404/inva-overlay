@@ -1,3 +1,7 @@
+# Metatools-related files
 doit.log
 __pycache__/
+
+# nvim-related files
+.nvimlog
 
