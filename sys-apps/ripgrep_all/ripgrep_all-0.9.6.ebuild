@@ -177,6 +177,14 @@ SLOT="0"
 KEYWORDS="*"
 IUSE=""
 
+RDEPEND="
+	virtual/rust
+	app-text/pandoc
+	app-text/poppler
+	media-video/ffmpeg
+	sys-apps/ripgrep
+"
+
 src_unpack() {
 	cargo_src_unpack
 
