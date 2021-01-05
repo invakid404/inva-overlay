@@ -5,3 +5,6 @@ __pycache__/
 # nvim-related files
 .nvimlog
 
+# vscode-related files
+.vs/
+.vscode/
