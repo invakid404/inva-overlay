@@ -13,7 +13,6 @@ IUSE=""
 RDEPEND="
 	dev-python/pip
 	dev-python/pylint
-	dev-python/autopep8
 	dev-python/rope
 	dev-python/numpy
 "

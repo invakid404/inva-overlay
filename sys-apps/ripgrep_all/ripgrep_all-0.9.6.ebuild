@@ -179,7 +179,10 @@ IUSE=""
 
 RDEPEND="
 	virtual/rust
-	app-text/pandoc
+	|| (
+		app-text/pandoc-bin
+		app-text/pandoc
+	)
 	app-text/poppler
 	media-video/ffmpeg
 	sys-apps/ripgrep
