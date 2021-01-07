@@ -12,7 +12,7 @@ SRC_URI="https://github.com/VSCodium/vscodium/releases/download/1.52.1/VSCodium-
 RESTRICT="mirror strip"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="amd64"
 IUSE="libsecret hunspell"
 
 DEPEND="
