@@ -24,5 +24,6 @@ RDEPEND="
 	dev-python/typing-extensions
 	dev-python/toml
 	dev-python/beautifulsoup
+	dev-python/packaging
 "
 
