@@ -20,4 +20,5 @@ RDEPEND="
 	media-fonts/takao-fonts
 	media-fonts/wqy-microhei
 	media-fonts/wqy-zenhei
+	media-fonts/jetbrains-mono
 "
