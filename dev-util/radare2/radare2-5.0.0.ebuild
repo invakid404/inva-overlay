@@ -8,7 +8,7 @@ DESCRIPTION="unix-like reverse engineering framework and commandline tools"
 HOMEPAGE="http://www.radare.org"
 
 SRC_URI="https://github.com/radareorg/radare2/archive/5.0.0.tar.gz -> radare2-5.0.0.tar.gz"
-KEYWORDS="**"
+KEYWORDS="*"
 
 LICENSE="GPL-2"
 SLOT="0"
