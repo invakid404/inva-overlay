@@ -4,8 +4,8 @@ EAPI=7
 
 inherit go-module
 
-DESCRIPTION="A general-purpose command-line fuzzy finder, written in GoLang"
-HOMEPAGE="https://github.com/junegunn/fzf"
+DESCRIPTION="Dnote is a simple command line notebook for programmers"
+HOMEPAGE="https://github.com/dnote/dnote"
 
 EGO_SUM=(
 	"cloud.google.com/go v0.26.0/go.mod"
@@ -652,7 +652,7 @@ go-module_set_globals
 SRC_URI="https://github.com/dnote/dnote/archive/cli-v0.12.0.tar.gz
 	${EGO_SUM_SRC_URI}"
 
-LICENSE="MIT BSD-with-disclosure"
+LICENSE="GPL3"
 SLOT="0"
 KEYWORDS="*"
 
