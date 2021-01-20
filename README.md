@@ -1,5 +1,5 @@
 # inva-overlay
-My personal overlay of various Gentoo/Funtoo ebuilds. Mostly a playground for me to use when testing Funtoo ebuilds before opening PRs to merge them upstream.
+My personal overlay of various Gentoo/Funtoo ebuilds. Mostly a playground for testing Funtoo ebuilds before merging them upstream.
 
 ## Installation
 Via layman: 
