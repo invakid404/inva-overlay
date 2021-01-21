@@ -656,7 +656,7 @@ LICENSE="GPL3"
 SLOT="0"
 KEYWORDS="*"
 
-S="${WORKDIR}/${PN}-cli-v0.12.0"
+S="${WORKDIR}/dnote-cli-v0.12.0"
 
 src_unpack() {
 	go-module_src_unpack

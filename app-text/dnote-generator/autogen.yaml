@@ -7,6 +7,8 @@ dnote-generator_rule:
     - dnote:
         buildargs: -tags="fts5" ./pkg/cli
         tagprefix: cli-v
+        bin: cli
     - dnote-server:
         buildargs: ./pkg/server
         tagprefix: server-v
+        bin: server

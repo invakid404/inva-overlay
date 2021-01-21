@@ -587,7 +587,7 @@ LICENSE="GPL3"
 SLOT="0"
 KEYWORDS="*"
 
-S="${WORKDIR}/${PN}-server-v1.0.4"
+S="${WORKDIR}/dnote-server-v1.0.4"
 
 src_unpack() {
 	go-module_src_unpack
@@ -598,7 +598,7 @@ src_compile() {
 }
 
 src_install() {
-	mv cli ${PN}
+	mv server ${PN}
 	dobin ${PN}
 	dodoc README.md
 }
