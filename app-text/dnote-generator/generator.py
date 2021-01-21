@@ -1,15 +1,15 @@
-#!/usr/bin/env python3
 
 import re
 from packaging import version
+from operator import itemgetter
 
 
-def get_release(release_data):
+def get_release(release_data, tag_prefix):
 	releases = list(
 		filter(
 			lambda x: x["prerelease"] is False
 			and x["draft"] is False
-			and x["tag_name"].startswith("cli-v"),
+			and x["tag_name"].startswith(tag_prefix),
 			release_data,
 		)
 	)
@@ -48,24 +48,24 @@ async def get_gosum_artifacts(hub, github_user, github_repo, version):
 
 
 async def generate(hub, **pkginfo):
-	name = pkginfo["name"]
+	user, repo, name, tag_prefix = itemgetter("user", "repo", "name", "tagprefix")(pkginfo)
 	releases_data = await hub.pkgtools.fetch.get_page(
-		f"https://api.github.com/repos/{name}/{name}/releases", is_json=True
+		f"https://api.github.com/repos/{user}/{repo}/releases", is_json=True
 	)
-	latest_release = get_release(releases_data)
+	latest_release = get_release(releases_data, tag_prefix)
 	if latest_release is None:
 		raise hub.pkgtools.ebuild.BreezyError(f"Can't find a suitable release of {name}")
 	version = latest_release["tag_name"]
-	print(version)
-	artifacts = await get_gosum_artifacts(hub, name, name, version)
+	artifacts = await get_gosum_artifacts(hub, user, repo, version)
 	ebuild = hub.pkgtools.ebuild.BreezyBuild(
 		**pkginfo,
-		version=version.lstrip("cli-v"),
+		version=version.lstrip(tag_prefix),
+		template="dnote-generator.tmpl",
 		tag_name=version,
 		gosum=artifacts["gosum"],
 		artifacts=[
 			hub.pkgtools.ebuild.Artifact(
-				url=f"https://github.com/{name}/{name}/archive/{version}.tar.gz"
+				url=f"https://github.com/{user}/{repo}/archive/{version}.tar.gz"
 			),
 			*artifacts["gosum_artifacts"],
 		],

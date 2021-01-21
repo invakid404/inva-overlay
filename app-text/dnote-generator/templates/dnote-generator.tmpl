@@ -26,7 +26,7 @@ src_unpack() {
 }
 
 src_compile() {
-	go build -mod=mod -tags="fts5" ./pkg/cli || die "compile failed"
+	go build -mod=mod {{buildargs}} || die "compile failed"
 }
 
 src_install() {

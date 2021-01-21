@@ -1,0 +1,12 @@
+dnote-generator_rule:
+  defaults:
+    cat: app-text
+    user: dnote
+    repo: dnote
+  packages:
+    - dnote:
+        buildargs: -tags="fts5" ./pkg/cli
+        tagprefix: cli-v
+    - dnote-server:
+        buildargs: ./pkg/server
+        tagprefix: server-v
