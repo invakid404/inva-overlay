@@ -205,3 +205,9 @@ src_unpack() {
 	rm -rf ${S}
 	mv ${WORKDIR}/dalance-procs-* ${S} || die
 }
+
+src_install() {
+	cargo_src_install
+
+	dodoc README.md
+}
