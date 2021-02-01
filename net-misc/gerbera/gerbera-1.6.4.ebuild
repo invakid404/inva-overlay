@@ -6,6 +6,7 @@ inherit cmake-utils eutils linux-info systemd tmpfiles user
 
 SRC_URI="https://github.com/gerbera/gerbera/archive/v1.6.4.tar.gz -> gerbera-1.6.4.tar.gz"
 KEYWORDS="*"
+S="${WORKDIR}/${P}"
 
 DESCRIPTION="UPnP Media Server (Based on MediaTomb)"
 HOMEPAGE="https://github.com/gerbera/gerbera"
