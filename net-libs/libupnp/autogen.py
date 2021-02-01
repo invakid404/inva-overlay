@@ -27,7 +27,10 @@ async def generate(hub, **pkginfo):
 	version = latest_release["tag_name"]
 	ebuild_version = version.lstrip("release-")
 	artifact_name = f"{repo}-{ebuild_version}.tar.gz"
-	artifact = hub.pkgtools.ebuild.Artifact(url=f"https://github.com/{repo}/{repo}/archive/{version}.tar.gz", final_name=artifact_name)
+	artifact = hub.pkgtools.ebuild.Artifact(
+		url=f"https://github.com/{repo}/{repo}/archive/{version}.tar.gz",
+		final_name=artifact_name,
+	)
 	await artifact.fetch()
 	artifact.extract()
 	src_dir = os.path.join(artifact.extract_path, f"{repo}-{version}")

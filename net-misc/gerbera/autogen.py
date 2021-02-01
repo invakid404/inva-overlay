@@ -29,6 +29,11 @@ async def generate(hub, **pkginfo):
 	ebuild = hub.pkgtools.ebuild.BreezyBuild(
 		**pkginfo,
 		version=ebuild_version,
-		artifacts=[hub.pkgtools.ebuild.Artifact(url=f"https://github.com/{repo}/{repo}/archive/{version}.tar.gz", final_name=f"{repo}-{ebuild_version}.tar.gz")],
+		artifacts=[
+			hub.pkgtools.ebuild.Artifact(
+				url=f"https://github.com/{repo}/{repo}/archive/{version}.tar.gz",
+				final_name=f"{repo}-{ebuild_version}.tar.gz",
+			)
+		],
 	)
 	ebuild.push()
