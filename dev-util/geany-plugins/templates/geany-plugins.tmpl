@@ -1,0 +1,46 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+DESCRIPTION="A collection of different plugins for Geany"
+HOMEPAGE="https://plugins.geany.org"
+SRC_URI="{{artifacts[0].src_uri}}"
+
+LICENSE="GPL-2"
+SLOT="0"
+KEYWORDS="*"
+
+IUSE="nls scope {{use_flags}}"
+
+RDEPEND="
+	dev-libs/glib:2
+	dev-util/geany
+	{{use_deps}}
+"
+BDEPEND="
+	virtual/pkgconfig
+	nls? ( sys-devel/gettext )
+"
+
+src_configure() {
+	local myeconfargs=(
+		--disable-cppcheck
+		--disable-extra-c-warnings
+		$(use_enable nls)
+		--enable-utilslib
+		{{config_flags}}
+	)
+
+	./autogen.sh "${myeconfargs[@]}"
+}
+
+src_install() {
+	default
+
+	find "${D}" -name '*.la' -delete || die
+
+	# make installs all translations if LINGUAS is empty
+	if [[ -z "${LINGUAS-x}" ]]; then
+		rm -r "${ED}/usr/share/locale/" || die
+	fi
+}
