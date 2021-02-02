@@ -68,12 +68,25 @@ async def generate(hub, **pkginfo):
 		plugins = [i.group(1) for i in plugin_matches if i]
 	plugins = [i.replace("_", "-").lower().strip() for i in plugins]
 	print(plugins)
-	use_flags = " ".join([f"{'' if i in additional_deps else '+'}{i}" for i in plugins if i not in disabled_plugins])
+	use_flags = " ".join(
+		[
+			f"{'' if i in additional_deps else '+'}{i}"
+			for i in plugins
+			if i not in disabled_plugins
+		]
+	)
 	use_deps = "\n".join([f"{i}? ( {j} )" for i, j in additional_deps.items()])
-	config_flags = "\n".join([f"--disable-{i}" if i in disabled_plugins else f"$(use_enable {i})" for i in plugins])
+	config_flags = "\n".join(
+		[f"--disable-{i}" if i in disabled_plugins else f"$(use_enable {i})" for i in plugins]
+	)
 	print(config_flags)
 	artifact.cleanup()
 	ebuild = hub.pkgtools.ebuild.BreezyBuild(
-		**pkginfo, version=version, use_flags=use_flags, use_deps=use_deps, config_flags=config_flags, artifacts=[artifact]
+		**pkginfo,
+		version=version,
+		use_flags=use_flags,
+		use_deps=use_deps,
+		config_flags=config_flags,
+		artifacts=[artifact],
 	)
 	ebuild.push()

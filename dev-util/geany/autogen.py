@@ -36,7 +36,9 @@ async def generate(hub, **pkginfo):
 	print(artifact.extract_path)
 	extract_path = Path(artifact.extract_path)
 	src_path = next(extract_path.iterdir())
-	translations = " ".join([i.name.rstrip(".po") for i in src_path.joinpath("po").glob("*.po")])
+	translations = " ".join(
+		[i.name.rstrip(".po") for i in src_path.joinpath("po").glob("*.po")]
+	)
 	artifact.cleanup()
 	ebuild = hub.pkgtools.ebuild.BreezyBuild(
 		**pkginfo,
