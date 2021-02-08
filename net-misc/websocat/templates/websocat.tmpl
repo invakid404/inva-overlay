@@ -1,0 +1,55 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+CRATES="
+{{crates}}"
+
+inherit cargo
+
+DESCRIPTION="Command-line client for WebSockets, like netcat, with socat-like functions"
+HOMEPAGE="https://github.com/vi/websocat"
+SRC_URI="{{artifacts[0].src_uri}}
+	$(cargo_crate_uris ${CRATES})"
+LICENSE="MIT Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD BSD-2 ISC Unlicense"
+SLOT="0"
+KEYWORDS="~amd64"
+IUSE="libressl ssl"
+
+RDEPEND="
+	ssl? (
+		!libressl? ( dev-libs/openssl:0= )
+		libressl? ( dev-libs/libressl:0= )
+	)
+"
+DEPEND="
+	${RUST_DEPEND}
+	${RDEPEND}
+"
+QA_FLAGS_IGNORED="/usr/bin/websocat"
+
+src_unpack() {
+	cargo_src_unpack
+	rm -rf ${S}
+	mv ${WORKDIR}/{{github_user}}-{{github_repo}}-* ${S} || die
+}
+
+src_configure() {
+	myfeatures=(
+		$(usex ssl ssl '')
+		seqpacket
+		signal_handler
+		tokio-process
+		unix_stdio
+	)
+}
+
+src_compile() {
+	cargo_src_compile ${myfeatures:+--features "${myfeatures[*]}"} --no-default-features
+
+}
+
+src_install() {
+	cargo_src_install ${myfeatures:+--features "${myfeatures[*]}"} --no-default-features
+	dodoc *.md
+}
