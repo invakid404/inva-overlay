@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import toml
+import subprocess
+import os
+import glob
 from packaging import version
 
 
@@ -9,25 +12,8 @@ def get_release(releases_data):
 	return None if not releases else sorted(releases, key=lambda x: version.parse(x["tag_name"])).pop()
 
 
-async def get_crates_artifacts(hub, github_user, github_repo, version):
-	crates_raw = await hub.pkgtools.fetch.get_page(
-		f"https://github.com/{github_user}/{github_repo}/raw/{version}/Cargo.lock"
-	)
-	crates_dict = toml.loads(crates_raw)
-	crates = ""
-	crates_artifacts = []
-	for package in crates_dict["package"]:
-		if package["name"] == github_repo:
-			continue
-		crates = crates + package["name"] + "-" + package["version"] + "\n"
-		crates_url = "https://crates.io/api/v1/crates/" + package["name"] + "/" + package["version"] + "/download"
-		crates_file = package["name"] + "-" + package["version"] + ".crate"
-		crates_artifacts.append(hub.pkgtools.ebuild.Artifact(url=crates_url, final_name=crates_file))
-	return dict(crates=crates, crates_artifacts=crates_artifacts)
-
-
 async def generate(hub, **pkginfo):
-	github_user = "vi"
+	github_user = "mozilla"
 	github_repo = pkginfo["name"]
 	json_list = await hub.pkgtools.fetch.get_page(
 		f"https://api.github.com/repos/{github_user}/{github_repo}/releases", is_json=True

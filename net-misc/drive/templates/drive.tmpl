@@ -1,0 +1,35 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+inherit go-module
+
+EGO_SUM=(
+{{gosum}})
+
+go-module_set_globals
+
+KEYWORDS="*"
+DESCRIPTION="Google Drive client for the commandline"
+HOMEPAGE="https://github.com/odeke-em/drive"
+LICENSE="Apache-2.0"
+SLOT="0"
+IUSE=""
+
+SRC_URI="{{artifacts[0].src_uri}}
+	${EGO_SUM_SRC_URI}"
+
+src_unpack() {
+	go-module_src_unpack
+	rm -rf ${S}
+	mv drive-* ${S} || die
+}
+
+src_compile() {
+	go build -mod=mod ./cmd/drive || die "compile failed"
+}
+
+src_install() {
+	dobin ${PN}
+	dodoc README.md
+}
