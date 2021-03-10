@@ -11,7 +11,7 @@ IUSE=""
 
 RDEPEND="
 	dev-db/mongodb
-	dev-python/pop
+	dev-python/subpop
 	dev-python/pymongo
 	dev-python/pyyaml
 	dev-python/jinja
