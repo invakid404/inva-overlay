@@ -11,7 +11,7 @@ SRC_URI="https://gitlab.com/kalilinux/packages/kali-undercover/-/archive/kali/20
 LICENSE="GPL"
 SLOT="0"
 KEYWORDS="*"
-IUSE=""
+IUSE="+shell"
 
 DEPEND="
 	media-fonts/liberation-fonts
@@ -28,6 +28,11 @@ BDEPEND=""
 src_unpack() {
 	default
 	mv ${PN}-* ${S} || die
+}
+
+src_prepare() {
+	default
+	use shell || sed -i '/.bashrc/d; /.zshrc/d' bin/kali-undercover
 }
 
 src_install() {
