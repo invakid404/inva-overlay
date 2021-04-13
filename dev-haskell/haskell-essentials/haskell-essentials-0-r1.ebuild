@@ -13,4 +13,12 @@ RDEPEND="
 	dev-haskell/cabal-install
 	dev-haskell/attoparsec
 	dev-haskell/arithmoi
+	dev-haskell/classy-prelude-yesod
+	dev-haskell/foreign-store
+	dev-haskell/persistent-mongodb
+	dev-haskell/stack
+	dev-haskell/yesod
+	dev-haskell/yesod-auth
+	dev-haskell/yesod-bin
+	dev-haskell/yesod-static
 "
