@@ -10,6 +10,7 @@ KEYWORDS="*"
 IUSE=""
 
 RDEPEND="
+	sys-libs/ncurses[tinfo]
 	dev-haskell/cabal-install
 	dev-haskell/attoparsec
 	dev-haskell/arithmoi
