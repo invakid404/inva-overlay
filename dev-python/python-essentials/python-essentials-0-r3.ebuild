@@ -15,4 +15,5 @@ RDEPEND="
 	dev-python/pylint
 	dev-python/rope
 	dev-python/numpy
+	dev-python/autopep8
 "
