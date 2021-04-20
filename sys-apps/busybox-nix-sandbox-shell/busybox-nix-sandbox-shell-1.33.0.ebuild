@@ -7,7 +7,7 @@ inherit flag-o-matic savedconfig toolchain-funcs
 DESCRIPTION="static busybox for sys-apps/nix sandbox needs"
 HOMEPAGE="https://www.busybox.net/"
 MY_P=busybox-${PV/_/-}
-SRC_URI="https://www.busybox.net/downloads/${MY_P}.tar.bz2"
+SRC_URI="https://busybox.net/downloads/busybox-1.33.0.tar.bz2"
 KEYWORDS="*"
 
 LICENSE="GPL-2"
