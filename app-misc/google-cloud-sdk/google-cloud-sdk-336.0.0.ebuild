@@ -4,7 +4,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3+ )
 
-inherit python-any-r1
+inherit bash-completion-r1 python-any-r1
 
 DESCRIPTION="A set of command-line tools for the Google Cloud Platform."
 HOMEPAGE="https://cloud.google.com/sdk/"
@@ -13,7 +13,7 @@ SRC_URI="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${P}-linux-x
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="*"
-IUSE=""
+IUSE="zsh-completion"
 
 DEPEND="${PYTHON_DEPS}"
 RDEPEND="${DEPEND}"
@@ -34,4 +34,14 @@ src_install() {
 		fperms +x ${BASE_DIR}/${bin_file}
 		dosym ${BASE_DIR}/${bin_file} /usr/bin/${bin_filename}
 	done
+
+	newbashcomp completion.bash.inc gcloud
+
+	bashcomp_alias gcloud bq
+	bashcomp_alias gcloud gsutil
+
+	if use zsh-completion; then
+		insinto /usr/share/zsh/site-functions
+		newins completion.zsh.inc _gcloud
+	fi
 }
