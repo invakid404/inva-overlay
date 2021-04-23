@@ -8,9 +8,9 @@ inherit desktop eutils linux-mod readme.gentoo-r1 xdg
 DESCRIPTION="Use android phone as webcam, using a v4l device driver and app"
 HOMEPAGE="https://www.dev47apps.com/droidcam/linux/
 	https://github.com/aramg/droidcam"
-SRC_URI="https://github.com/aramg/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="{{artifacts[0].src_uri}}"
 
-KEYWORDS="~amd64"
+KEYWORDS="*"
 LICENSE="GPL-2"
 SLOT="0"
 
@@ -59,10 +59,19 @@ MODULESD_V4L2LOOPBACK_DC_ENABLED="yes"
 CONFIG_CHECK="~SND_ALOOP VIDEO_DEV MEDIA_SUPPORT MEDIA_CAMERA_SUPPORT"
 ERROR_SND_ALOOP="CONFIG_SND_ALOOP is required for audio support"
 
-src_prepare() {
-	eapply_user
+src_unpack() {
+	default
+	rm -rf ${S}
+	mv ${WORKDIR}/{{github_user}}-{{github_repo}}-* ${S} || die
+}
 
-	eapply "${FILESDIR}/${PN}-makefile-fixes.patch"
+src_prepare() {
+	default
+
+	sed -i \
+		-e 's/libturbojpeg.a/libturbojpeg.so/g' \
+		-e 's/\/opt\/libjpeg-turbo/\/usr/g' \
+		Makefile
 
 	if ! use gtk ; then
 		sed -i -e '/cflags gtk+/d' Makefile || die
