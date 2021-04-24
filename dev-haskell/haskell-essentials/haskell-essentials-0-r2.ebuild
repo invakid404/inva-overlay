@@ -10,11 +10,11 @@ KEYWORDS="*"
 IUSE=""
 
 RDEPEND="
-	sys-libs/ncurses[tinfo]
-	dev-haskell/cabal-install
-	dev-haskell/attoparsec
 	dev-haskell/arithmoi
+	dev-haskell/attoparsec
+	dev-haskell/cabal-install
 	dev-haskell/classy-prelude-yesod
+	dev-haskell/data-ordlist
 	dev-haskell/foreign-store
 	dev-haskell/persistent-mongodb
 	dev-haskell/stack
@@ -22,4 +22,5 @@ RDEPEND="
 	dev-haskell/yesod-auth
 	dev-haskell/yesod-bin
 	dev-haskell/yesod-static
+	sys-libs/ncurses[tinfo]
 "
