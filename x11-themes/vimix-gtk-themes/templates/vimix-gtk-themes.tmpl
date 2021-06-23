@@ -26,5 +26,5 @@ src_unpack() {
 
 src_install() {
 	mkdir -p "${ED}"/usr/share/themes
-	./install.sh -d "${ED}"/usr/share/themes || die
+	./install.sh -a -d "${ED}"/usr/share/themes || die
 }
