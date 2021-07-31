@@ -4,11 +4,11 @@ EAPI=7
 
 inherit desktop eutils gnome3-utils readme.gentoo-r1 xdg
 
-DESCRIPTION="{{description}}"
-HOMEPAGE="{{homepage}}"
-SRC_URI="{{artifacts[0].src_uri}}"
+DESCRIPTION="The Most Intelligent Ruby and Rails IDE"
+HOMEPAGE="https://www.jetbrains.com/ruby"
+SRC_URI="https://download.jetbrains.com/ruby/RubyMine-2021.2.tar.gz -> rubymine-2021.2.tar.gz"
 
-LICENSE="{{license}}"
+LICENSE="JetBrains"
 SLOT="0"
 KEYWORDS="*"
 IUSE="+system-java +sysctl"
@@ -28,12 +28,12 @@ QA_PREBUILT="opt/${PN}/bin/fsnotifier
 	opt/${PN}/bin/libyjpagent-linux64.so"
 
 
-S="${WORKDIR}/{{srcdir}}-${PV}"
+S="${WORKDIR}/rubymine-${PV}"
 
 post_src_unpack() {
 	if [ ! -d "$S" ]; then
 		einfo "Renaming source directory to predictable name..."
-		mv $(ls "${WORKDIR}") "{{srcdir}}-${PV}" || die
+		mv $(ls "${WORKDIR}") "rubymine-${PV}" || die
 	fi
 }
 
@@ -56,7 +56,7 @@ src_install() {
 	local pngfile="$(find ${dst}/bin -maxdepth 1 -iname '*.png')"
 	newicon $pngfile "${PN}.png" || die
 
-	make_desktop_entry ${PN} "{{fullname}}" ${PN} "Development;IDE;" || die
+	make_desktop_entry ${PN} "RubyMine" ${PN} "Development;IDE;" || die
 
 	if use system-java; then
 		rm -rf "$dst{jbr,jre{64}}" || die "Failed to remove bundled Java"
