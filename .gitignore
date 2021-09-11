@@ -8,3 +8,6 @@ __pycache__/
 # vscode-related files
 .vs/
 .vscode/
+
+# idea-related files
+.idea
