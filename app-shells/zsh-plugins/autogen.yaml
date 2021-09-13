@@ -4,3 +4,4 @@ zsh-plugins_rule:
   packages:
     zsh-autosuggestions:
     zsh-syntax-highlighting:
+    zsh-history-substring-search:

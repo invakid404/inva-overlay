@@ -17,7 +17,7 @@ RDEPEND="app-shells/zsh"
 DISABLE_AUTOFORMATTING=true
 DOC_CONTENTS="\
 To use syntax highlighting, enable it in the current interactive shell:
-	source ${EROOT}/usr/share/zsh/plugins/${PN}/${PN}.zsh
+	. ${EROOT}/usr/share/zsh/plugins/${PN}/${PN}.zsh
 For further information, please read the documentation files."
 
 post_src_unpack() {
