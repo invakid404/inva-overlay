@@ -21,7 +21,7 @@ RDEPEND="
 	media-libs/glew:=
 	media-libs/libpng:0=
 	media-libs/libsdl2[joystick,video]
-	media-libs/sdl2-ttf[static-libs]
+	media-libs/sdl2-ttf
 	media-libs/libvorbis
 	media-libs/openal
 	media-libs/sdl2-image[png,jpeg]
