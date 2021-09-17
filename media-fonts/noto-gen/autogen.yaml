@@ -1,0 +1,12 @@
+noto-gen_rule:
+  defaults:
+    cat: media-fonts
+    user: googlei18n
+  packages:
+    - noto:
+        repo: noto-fonts
+    - noto-cjk:
+        repo: noto-cjk
+    - noto-emoji:
+        user: googlefonts
+        repo: noto-emoji

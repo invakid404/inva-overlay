@@ -12,8 +12,9 @@ async def query_github_api(user, repo, query):
 
 
 async def generate(hub, **pkginfo):
-	github_user = "googlefonts"
-	github_repo = pkginfo["name"]
+	print(pkginfo)
+	github_user = pkginfo["user"]
+	github_repo = pkginfo["repo"]
 	commits = await query_github_api(github_user, github_repo, "commits")
 	target_commit = commits[0]
 	commit_date = datetime.strptime(target_commit["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ")
