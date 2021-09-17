@@ -12,17 +12,10 @@ KEYWORDS="*"
 
 S="${WORKDIR}"
 
-src_prepare() {
-	default
-
-	sed -i \
-		-e "s/go build/& -mod=vendor/g" \
-		Makefile
-}
-
 src_compile() {
 	emake_args=(
-		LDFLAGS=""
+		LDFLAGS="",
+		GOFLAGS="-v -x -mod=vendor"
 	)
 
 	emake "${emake_args[@]}" build || die
