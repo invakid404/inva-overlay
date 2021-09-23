@@ -19,7 +19,7 @@ RDEPEND="
 	app-arch/xz-utils
 	dev-db/sqlite
 	dev-libs/editline:0=
-	>=dev-libs/boost-1.66:0=[context]
+	dev-libs/boost:0=[context]
 	net-misc/curl
 	sys-libs/libseccomp
 	sys-libs/zlib
@@ -105,8 +105,6 @@ src_install() {
 	default
 
 	readme.gentoo_create_doc
-
-	# TODO: will need a tweak for prefix
 
 	# Follow the steps of 'scripts/install-multi-user.sh:create_directories()'
 	local dir dirs=(
