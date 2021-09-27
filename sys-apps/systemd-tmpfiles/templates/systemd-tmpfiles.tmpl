@@ -72,6 +72,7 @@ src_configure() {
 		{{ disable_boolean_build_options }}
 		-Drootprefix="${EPREFIX:-/}"
 		-Dacl=true
+		-Db_staticpic=true
 		-Dtmpfiles=true
 		-Dstandalone-binaries=true # this and below option does the magic
 		-Dstatic-libsystemd=true

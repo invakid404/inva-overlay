@@ -79,6 +79,7 @@ src_configure() {
 		-Db_ndebug=false
 		-Db_pch=false
 		-Db_pie=false
+		-Db_staticpic=false
 		-Dcpp_debugstl=false
 		-Dcpp_rtti=false
 		-Dbuild.cpp_debugstl=false
@@ -201,6 +202,7 @@ src_configure() {
 		-Dstdsplit=false
 		-Drootprefix="${EPREFIX:-/}"
 		-Dacl=true
+		-Db_staticpic=true
 		-Dtmpfiles=true
 		-Dstandalone-binaries=true # this and below option does the magic
 		-Dstatic-libsystemd=true

@@ -35,7 +35,6 @@ async def generate(hub, **pkginfo):
 	available_build_options = await hub.pkgtools.meson.get_build_options_from_artifact(source_artifact)
 	boolean_build_options = (
 		build_option.name for build_option in available_build_options if
-		"pic" not in build_option.name and
 		build_option.type in [
 			hub.pkgtools.meson.MesonBuildOptionType.BOOLEAN,
 			hub.pkgtools.meson.MesonBuildOptionType.COMBO
