@@ -1,0 +1,9 @@
+kitty-gen_rule:
+  defaults:
+    cat: x11-terms
+  packages:
+    - kitty:
+        patches: []
+    - kitty-terminfo:
+        patches:
+          - kitty-terminfo-setup-0.23.1.20211001.patch
