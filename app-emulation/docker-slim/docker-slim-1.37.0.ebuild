@@ -1151,15 +1151,20 @@ post_src_unpack() {
 src_compile() {
 	BUILD_TIME="$(date -u '+%Y-%m-%d_%I:%M:%S%p')"
 
-	LD_FLAGS="-s -w -X github.com/docker-slim/docker-slim/pkg/version.appVersionTag=${TAG} -X github.com/docker-slim/docker-slim/pkg/version.appVersionRev=current -X github.com/docker-slim/docker-slim/pkg/version.appVersionTime=${BUILD_TIME}"
+	LD_FLAGS="-s -w \
+		-X github.com/docker-slim/docker-slim/pkg/version.appVersionTag=${PV} \
+		-X github.com/docker-slim/docker-slim/pkg/version.appVersionRev=current \
+		-X github.com/docker-slim/docker-slim/pkg/version.appVersionTime=${BUILD_TIME}"
 
-	CGO_ENABLED=0 go build -ldflags="${LD_FLAGS}" -mod=vendor ./cmd/docker-slim || die "compile failed"
-	CGO_ENABLED=0 go build -ldflags="${LD_FLAGS}" -mod=vendor ./cmd/docker-slim-sensor || die "compile failed"
+	for cmd_name in docker-slim{,-sensor}; do
+		CGO_ENABLED=0 go build -ldflags="${LD_FLAGS}" -mod=vendor ./cmd/${cmd_name} || die "compile failed"
+	done
 }
 
 src_install() {
-	dobin ${PN}
-	dobin ${PN}-sensor
+	for cmd_name in docker-slim{,-sensor}; do
+		dobin ${cmd_name}
+	done
 
 	dodoc README.md
 }
