@@ -451,9 +451,6 @@ src_configure() {
 src_install() {
 	einstalldocs
 
-	newinitd "${FILESDIR}"/spotifyd.initd spotifyd
-	newconfd "${FILESDIR}"/spotifyd.confd spotifyd
-
 	insinto /etc
 	doins "${FILESDIR}"/spotifyd.conf
 
