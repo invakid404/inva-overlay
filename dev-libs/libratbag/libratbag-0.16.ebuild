@@ -1,0 +1,83 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+PYTHON_COMPAT=( python3+ )
+
+inherit meson python-single-r1 user udev
+
+DESCRIPTION="Library to configure gaming mice"
+HOMEPAGE="https://github.com/libratbag/libratbag"
+SRC_URI="https://api.github.com/repos/libratbag/libratbag/tarball/refs/tags/v0.16 -> libratbag-0.16.tar.gz"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="*"
+IUSE="doc"
+REQUIRED_USE="
+	${PYTHON_REQUIRED_USE}
+"
+
+BDEPEND="
+	${PYTHON_DEPS}
+	dev-lang/swig
+	virtual/pkgconfig
+	doc? ( app-doc/doxygen )
+"
+RDEPEND="
+	${PYTHON_DEPS}
+	dev-libs/json-glib
+	dev-libs/libevdev
+	virtual/libudev
+	$(python_gen_cond_dep '
+		dev-python/pygobject:3[${PYTHON_USEDEP}]
+		dev-python/python-evdev[${PYTHON_USEDEP}]
+	')
+	sys-auth/elogind
+"
+DEPEND="
+	${RDEPEND}
+	dev-libs/gobject-introspection
+"
+
+post_src_unpack() {
+	mv "${WORKDIR}"/libratbag-libratbag-* "${S}" || die
+}
+
+src_prepare() {
+	default
+
+	# Fix systemd includes for elogind
+	sed -i -e 's@include <systemd@include <elogind@' \
+		ratbagd/ratbag*.c || die
+}
+
+src_configure() {
+	python_setup
+
+	local emesonargs=(
+		$(meson_use doc documentation)
+		-Dsystemd=false
+		-Dtests=false
+		-Ddbus-group="plugdev"
+		-Dlogind-provider="elogind"
+		-Dudev-dir="${EPREFIX}$(get_udevdir)"
+	)
+
+	meson_src_configure
+}
+
+src_install() {
+	meson_src_install
+	python_fix_shebang "${ED}"/usr/bin/
+	newinitd "${FILESDIR}"/ratbagd.init ratbagd
+}
+
+pkg_postinst() {
+	enewgroup plugdev
+
+	if [[ -z "${REPLACING_VERSIONS}" ]] ; then
+		elog 'You need to be in "plugdev" group in order to access the'
+		elog 'ratbagd dbus interface'
+	fi
+}
