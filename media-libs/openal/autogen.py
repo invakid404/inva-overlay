@@ -3,23 +3,20 @@
 from packaging import version
 
 
-async def get_tags(hub, github_user, github_repo):
-	tags = []
+async def tag_generator(hub, github_user, github_repo):
 	page = 1
 
 	while True:
-		curr_tags = await hub.pkgtools.fetch.get_page(
+		current_page = await hub.pkgtools.fetch.get_page(
 			f"https://api.github.com/repos/{github_user}/{github_repo}/tags?page={page}",
 			is_json=True,
 		)
 
-		if not len(curr_tags):
+		if not len(current_page):
 			break
 
-		tags.extend(curr_tags)
+		yield current_page
 		page += 1
-
-	return tags
 
 
 async def generate(hub, **pkginfo):
@@ -27,7 +24,9 @@ async def generate(hub, **pkginfo):
 	github_repo = f"{pkginfo['name']}-soft"
 	print(f"{github_repo}-")
 
-	release_data = await get_tags(hub, github_user, github_repo)
+	release_data = []
+	async for tags_page in tag_generator(hub, github_user, github_repo):
+		release_data = release_data + tags_page
 
 	def get_version(release):
 		return release["name"].lstrip(f"{github_repo}-")
