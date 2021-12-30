@@ -1,0 +1,77 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+inherit go-module
+
+DESCRIPTION="Encrypted overlay filesystem written in Go"
+HOMEPAGE="https://nuetzlich.net/gocryptfs/ https://github.com/rfjakob/gocryptfs"
+
+EGO_SUM=(
+{{ gosum }})
+
+go-module_set_globals
+
+SRC_URI="{{ artifacts[0].src_uri }}
+	${EGO_SUM_SRC_URI}"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="*"
+IUSE="+man pie +ssl"
+
+BDEPEND="man? ( dev-go/go-md2man )"
+RDEPEND="
+	sys-fs/fuse
+	ssl? ( dev-libs/openssl:0= )
+"
+
+post_src_unpack() {
+	mv "${WORKDIR}"/{{ github_user }}-{{ github_repo }}-* "${S}" || die
+}
+
+src_compile() {
+	local myldflags=(
+		"-s -w"
+		-X "main.GitVersion=v${PV}"
+		-X "'main.GitVersionFuse=[vendored]'"
+		-X "main.BuildDate=$(date -u '+%Y-%m-%d')"
+	)
+
+	local mygoargs=(
+		-v -work -x
+		"-buildmode=$(usex pie pie exe)"
+		"-asmflags=all=-trimpath=${S}"
+		"-gcflags=all=-trimpath=${S}"
+		-ldflags "${myldflags[*]}"
+		-tags "$(usex !ssl 'without_openssl' 'none')"
+	)
+
+	go build -mod=mod "${mygoargs[@]}" || die "compile failed"
+
+	for dir in gocryptfs-xray contrib/statfs contrib/findholes contrib/atomicrename; do
+		pushd "${dir}" || die
+		go build "${mygoargs[@]}" || die
+		popd || die
+	done
+
+	if use man; then
+		go-md2man -in Documentation/MANPAGE.md -out gocryptfs.1 || die
+		go-md2man -in Documentation/MANPAGE-STATFS.md -out gocryptfs-statfs.2 || die
+		go-md2man -in Documentation/MANPAGE-XRAY.md -out gocryptfs-xray.1 || die
+	fi
+}
+
+src_install() {
+	dobin gocryptfs
+	dobin gocryptfs-xray/gocryptfs-xray
+	newbin contrib/statfs/statfs "${PN}-statfs"
+	newbin contrib/findholes/findholes "${PN}-findholes"
+	newbin contrib/atomicrename/atomicrename "${PN}-atomicrename"
+
+	if use man; then
+		doman gocryptfs.1
+		doman gocryptfs-xray.1
+		doman gocryptfs-statfs.2
+	fi
+}
