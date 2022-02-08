@@ -1,7 +1,0 @@
-supertux:
-  generator: github-1
-  packages:
-    - distrobox:
-        github:
-          user: 89luca89
-          query: releases
