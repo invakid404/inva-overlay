@@ -1,0 +1,10 @@
+kitty-gen_rule:
+  defaults:
+    cat: x11-terms
+  packages:
+    - kitty:
+        patches: []
+    - kitty-terminfo:
+        patches: []
+    - kitty-shell-integration:
+        patches: []
