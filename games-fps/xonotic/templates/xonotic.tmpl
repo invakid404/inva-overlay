@@ -9,7 +9,7 @@ MY_P="${MY_PN}-${PV}"
 
 DESCRIPTION="Fork of Nexuiz, Deathmatch FPS based on DarkPlaces, an advanced Quake 1 engine"
 HOMEPAGE="https://www.xonotic.org/"
-SRC_URI="https://beta.xonotic.org/autobuild/${MY_P}.zip"
+SRC_URI="{{ artifacts[0].src_uri }}"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -48,8 +48,8 @@ BDEPEND="app-arch/unzip"
 
 DOCS="Docs/*.txt"
 
-CHECKREQS_DISK_BUILD="1200M"
-CHECKREQS_DISK_USR="950M"
+CHECKREQS_DISK_BUILD="1300M"
+CHECKREQS_DISK_USR="1100M"
 
 S="${WORKDIR}/${MY_PN}"
 
@@ -66,7 +66,7 @@ src_prepare() {
 
 	sed -i \
 		-e "/^EXE_/s|darkplaces|${PN}|" \
-		-e "s|-O3|${CFLAGS}|" \
+		-e "s|^CFLAGS_COMMON=|&${CFLAGS} |" \
 		-e "/-lm/s|$| ${LDFLAGS}|" \
 		-e '/^STRIP/s|strip|true|' \
 		source/darkplaces/makefile.inc || die
