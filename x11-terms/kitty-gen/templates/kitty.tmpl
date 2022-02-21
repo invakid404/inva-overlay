@@ -61,10 +61,10 @@ PATCHES=(
 
 src_unpack() {
 	unpack ${A}
-	mv ${WORKDIR}/kitty-{{tag_version}}/docs/_build ${WORKDIR}/docs_build || die
-	rm -rf ${WORKDIR}/kitty-{{tag_version}}
+	mv ${WORKDIR}/{{ github_repo }}-{{ version }}/docs/_build ${WORKDIR}/docs_build || die
+	rm -rf ${WORKDIR}/{{ github_repo }}-{{ version }}
 	rm -rf ${S}
-	mv ${WORKDIR}/kitty-* ${S} || die
+	mv ${WORKDIR}/{{ github_user }}-{{ github_repo }}-* ${S} || die
 	mv ${WORKDIR}/docs_build ${S}/docs/_build || die
 }
 

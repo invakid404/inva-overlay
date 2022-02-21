@@ -21,7 +21,7 @@ PATCHES=(
 src_unpack() {
 	unpack ${A}
 	rm -rf ${S}
-	mv ${WORKDIR}/kitty-* ${S} || die
+	mv ${WORKDIR}/{{ github_user }}-{{ github_repo }}-* ${S} || die
 }
 
 src_compile() { :; }
