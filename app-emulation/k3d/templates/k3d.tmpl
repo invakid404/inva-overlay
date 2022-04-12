@@ -1,0 +1,45 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+inherit go-module
+
+DESCRIPTION="k3d creates k3s clusters in docker"
+HOMEPAGE="https://github.com/rancher/k3d"
+
+K3D_K3S_TAG={{ k3s_tag }}
+EGO_SUM=(
+{{ gosum }})
+go-module_set_globals
+
+SRC_URI="{{ artifacts[0].src_uri }}
+	${EGO_SUM_SRC_URI}"
+LICENSE="MIT Apache-2.0 BSD BSD-2 MPL-2.0 ISC"
+SLOT="0"
+
+KEYWORDS="*"
+IUSE="doc"
+
+post_src_unpack() {
+    mv "${WORKDIR}"/{{ github_user }}-{{ github_repo }}-* "${S}" || die
+}
+
+src_prepare() {
+	default
+	rm Makefile || die
+}
+
+src_compile() {
+	CGO_ENABLED=0 \
+		go build \
+		-ldflags "-w -s -X github.com/rancher/k3d/v5/version.Version=v${PV} -X github.com/rancher/k3d/v5/version.K3sVersion=${K3D_K3S_TAG}" \
+		-o bin/k3d
+}
+
+src_install() {
+	dobin bin/${PN}
+	DOCS=(*.md)
+	if use doc; then
+		DOCS+=(docs)
+	fi
+	default_src_install
+}
