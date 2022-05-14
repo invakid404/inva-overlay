@@ -11,7 +11,7 @@ RESTRICT="mirror"
 DESCRIPTION="Multimedia processing graphs"
 HOMEPAGE="http://pipewire.org/"
 SRC_URI="
-	https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/0.3.48/pipewire-0.3.48.tar.gz -> pipewire-pipewire-0.3.48-6c4d3a51583f823b789b0de2df1e36d6c2f8dff8.tar.gz
+	https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/0.3.51/pipewire-0.3.51.tar.gz -> pipewire-pipewire-0.3.51-ebc775674a0cf254cebd6d4694944006405807e3.tar.gz
 	https://gitlab.freedesktop.org/pipewire/media-session/-/archive/0.4.1/media-session-0.4.1.tar.gz -> pipewire-media-session-0.4.1-e5d5cf2404786af8bcc40bdb8a2962bef4ec18b6.tar.gz
 "
 
