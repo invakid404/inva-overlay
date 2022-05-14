@@ -2,9 +2,9 @@
 
 EAPI=7
 
-DESCRIPTION="{{ description }}"
+DESCRIPTION="Cross-platform, fast, feature-rich, GPU based terminal"
 HOMEPAGE="https://github.com/kovidgoyal/kitty"
-SRC_URI="{{artifacts[0].src_uri}}"
+SRC_URI="https://github.com/kovidgoyal/kitty/releases/download/v0.25.0/kitty-0.25.0.tar.xz -> kitty-0.25.0.tar.xz"
 S="${WORKDIR}/kitty-${PV}"
 
 LICENSE="GPL-3"
@@ -15,9 +15,6 @@ IUSE=""
 BDEPEND="sys-libs/ncurses"
 
 PATCHES=(
-	{%- for patch in patches %}
-		{{gen_path}}/files/{{patch}}
-	{%- endfor %}
 )
 
 RESTRICT="test" # intended to be ran on the full kitty package

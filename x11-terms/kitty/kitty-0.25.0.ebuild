@@ -6,10 +6,10 @@ PYTHON_COMPAT=( python3+ )
 
 inherit python-single-r1 toolchain-funcs xdg
 
-SRC_URI="https://github.com/kovidgoyal/kitty/releases/download/v0.24.2/kitty-0.24.2.tar.xz -> kitty-0.24.2.tar.xz"
+SRC_URI="https://github.com/kovidgoyal/kitty/releases/download/v0.25.0/kitty-0.25.0.tar.xz -> kitty-0.25.0.tar.xz"
 KEYWORDS="*"
 
-DESCRIPTION="A modern, hackable, featureful, OpenGL-based terminal emulator"
+DESCRIPTION="Cross-platform, fast, feature-rich, GPU based terminal"
 HOMEPAGE="https://github.com/kovidgoyal/kitty"
 
 LICENSE="GPL-3"
@@ -88,6 +88,8 @@ src_compile() {
 		--shell-integration="enabled no-rc" \
 		--update-check-interval=0 \
 		linux-package || die "Failed to compile kitty."
+
+    rm -r linux-package/$(get_libdir)/kitty/terminfo || die
 }
 
 src_test() {
@@ -97,8 +99,12 @@ src_test() {
 
 src_install() {
 	insinto /usr
+
 	doins -r linux-package/*
 	dobin linux-package/bin/kitty
+
+	fperms +x /usr/$(get_libdir)/kitty/shell-integration/ssh/{askpass.py,kitty}
+
 	python_fix_shebang "${ED}"
 }
 

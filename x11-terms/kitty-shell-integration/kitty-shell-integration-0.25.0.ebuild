@@ -2,9 +2,9 @@
 
 EAPI=7
 
-DESCRIPTION="Shell integration scripts for kitty, a GPU-based terminal emulator"
+DESCRIPTION="Cross-platform, fast, feature-rich, GPU based terminal"
 HOMEPAGE="https://sw.kovidgoyal.net/kitty/"
-SRC_URI="https://github.com/kovidgoyal/kitty/releases/download/v0.24.2/kitty-0.24.2.tar.xz -> kitty-0.24.2.tar.xz"
+SRC_URI="https://github.com/kovidgoyal/kitty/releases/download/v0.25.0/kitty-0.25.0.tar.xz -> kitty-0.25.0.tar.xz"
 S="${WORKDIR}/kitty-${PV}"
 
 LICENSE="GPL-3"
@@ -33,4 +33,7 @@ src_install() {
 	dosym /usr/share/{kitty/shell-integration/zsh/completions,zsh/site-functions}/_kitty
 	# zsh integration is handled automatically without needing to modify rc files,
 	# but may require user intervention depending on zsh invocation or if remote
+
+	# this is used internally by the ssh kitten and is not useful there
+	rm -r "${ED}"/usr/share/kitty/shell-integration/ssh || die
 }
