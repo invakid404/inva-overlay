@@ -12,6 +12,7 @@ SLOT="0"
 KEYWORDS="*"
 IUSE=""
 
+RDEPEND="!<=x11-terms/kitty-0.25.0"
 BDEPEND="sys-libs/ncurses"
 
 PATCHES=(
