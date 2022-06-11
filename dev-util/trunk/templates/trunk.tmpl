@@ -1,0 +1,24 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+CRATES="
+{{crates}}"
+
+inherit cargo
+
+DESCRIPTION="WASM web application bundler for Rust"
+HOMEPAGE="https://trunkrs.dev https://github.com/thedodd/trunk"
+SRC_URI="{{ artifacts[0].src_uri }}
+	$(cargo_crate_uris ${CRATES})"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="*"
+
+src_unpack() {
+	cargo_src_unpack
+
+	rm -rf ${S}
+	mv "${WORKDIR}"/{{github_user}}-{{github_repo}}-* "${S}" || die
+}
