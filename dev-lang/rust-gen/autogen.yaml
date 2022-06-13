@@ -45,6 +45,6 @@ rust-gen_rule:
         extra_components:
           rls:
             name: rust-src
-          wasm32:
+          wasm:
             name: rust-std
             chost: wasm32-unknown-unknown

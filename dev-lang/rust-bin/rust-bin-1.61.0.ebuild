@@ -44,7 +44,7 @@ SRC_URI="
 	rls? (
 		https://static.rust-lang.org/dist/rust-src-1.61.0.tar.xz
 	)
-	wasm32? (
+	wasm? (
 		https://static.rust-lang.org/dist/rust-std-1.61.0-wasm32-unknown-unknown.tar.xz
 	)
 "
@@ -52,7 +52,7 @@ SRC_URI="
 LICENSE="|| ( MIT Apache-2.0 ) BSD-1 BSD-2 BSD-4 UoI-NCSA"
 SLOT="stable"
 KEYWORDS="*"
-IUSE="clippy cpu_flags_x86_sse2 doc prefix rustfmt rls wasm32"
+IUSE="clippy cpu_flags_x86_sse2 doc prefix rustfmt rls wasm"
 
 DEPEND=""
 RDEPEND="app-eselect/eselect-rust"
@@ -103,7 +103,7 @@ src_unpack() {
 		if use rls; then
 				mv "${WORKDIR}/rust-src-1.61.0/rust-src" "${S}"/rust-src
 		fi
-		if use wasm32; then
+		if use wasm; then
 				mv "${WORKDIR}/rust-std-1.61.0-wasm32-unknown-unknown/rust-std-wasm32-unknown-unknown" "${S}"/rust-std-wasm32-unknown-unknown
 		fi
 }
@@ -113,7 +113,7 @@ src_prepare() {
 		if use rls; then
 				echo "rust-src" >> components
 		fi
-		if use wasm32; then
+		if use wasm; then
 				echo "rust-std-wasm32-unknown-unknown" >> components
 		fi
 }
@@ -142,7 +142,7 @@ multilib_src_install() {
 	use rls && components="${components},rls-preview,${analysis}"
 	use rustfmt && components="${components},rustfmt-preview"
 		use rls && components="${components},rust-src"
-		use wasm32 && components="${components},rust-std-wasm32-unknown-unknown"
+		use wasm && components="${components},rust-std-wasm32-unknown-unknown"
 
 	./install.sh \
 		--components="${components}" \
