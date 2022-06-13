@@ -31,7 +31,7 @@ QA_PREBUILT="
 
 DESCRIPTION="Android development environment based on IntelliJ IDEA"
 HOMEPAGE="https://developer.android.com/studio"
-SRC_URI="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.14/android-studio-2021.2.1.14-linux.tar.gz"
+SRC_URI="https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.15/android-studio-2021.2.1.15-linux.tar.gz"
 
 LICENSE="Apache-2.0 android-sdk"
 SLOT="0"
@@ -76,7 +76,7 @@ src_install() {
 	insinto "${dir}"
 	doins -r *
 
-	fperms 755 "${dir}"/bin/{fsnotifier{,64},format.sh,game-tools.sh,inspect.sh,ltedit.sh,profiler.sh,studio.sh,printenv.py,restart.py}
+	fperms 755 "${dir}"/bin/{fsnotifier,format.sh,game-tools.sh,inspect.sh,ltedit.sh,profiler.sh,studio.sh,printenv.py,restart.py}
 	fperms -R 755 "${dir}"/bin/helpers
 	fperms -R 755 "${dir}"/bin/lldb
 	fperms -R 755 "${dir}"/jre/bin
