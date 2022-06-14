@@ -1,0 +1,40 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+inherit go-module
+
+EGO_SUM=(
+{{gosum}})
+
+go-module_set_globals
+
+DESCRIPTION="CLI for Linkerd: Ultralight, security-first service mesh for Kubernetes"
+HOMEPAGE="https://linkerd.io https://github.com/linkerd/linkerd2"
+SRC_URI="
+    {{artifacts[0].src_uri}}
+	${EGO_SUM_SRC_URI}
+"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="*"
+
+post_src_unpack() {
+	rm -rf ${S}
+	mv "${WORKDIR}"/{{github_user}}-{{github_repo}}-* "${S}" || die
+}
+
+src_compile() {
+    go generate -mod=mod ./pkg/charts/static || die "failed to generate charts"
+    go generate -mod=mod ./jaeger/static || die "failed to generate charts"
+    go generate -mod=mod ./multicluster/static || die "failed to generate charts" 
+    go generate -mod=mod ./viz/static || die "failed to generate charts"
+
+    go build -tags prod -mod=mod -ldflags "-s -w -X github.com/linkerd/linkerd2/pkg/version.Version=stable-${PV}" -o linkerd ./cli || die "compile failed"
+}
+
+src_install() {
+	dobin ${PN}
+	dodoc README.md
+}
