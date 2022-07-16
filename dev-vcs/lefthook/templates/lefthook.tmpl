@@ -1,0 +1,40 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+inherit go-module
+
+EGO_SUM=(
+{{ gosum }})
+
+go-module_set_globals
+
+SRC_URI="{{ artifacts[0].src_uri }}
+	${EGO_SUM_SRC_URI}"
+
+DESCRIPTION="Fast and powerful Git hooks manager for any type of projects"
+HOMEPAGE="https://github.com/evilmartians/lefthook"
+
+LICENSE="Apache-2.0"
+SLOT="0"
+KEYWORDS="*"
+IUSE=""
+
+DEPEND=""
+RDEPEND="
+    ${DEPEND}
+	dev-vcs/git
+"
+
+post_src_unpack() {
+	mv "${WORKDIR}"/{{ github_user }}-{{ github_repo }}-* "${S}" || die
+}
+
+src_compile() {
+	go build -mod=mod . || die "compile failed"
+}
+
+src_install() {
+	dobin ${PN}
+	dodoc README.md CHANGELOG.md docs/full_guide.md
+}
