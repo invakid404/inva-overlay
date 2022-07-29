@@ -1,0 +1,51 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+CRATES="
+{{crates}}"
+
+inherit cargo
+
+DESCRIPTION="Alternative to find that provides sensible defaults for 80% of the use cases"
+HOMEPAGE="https://github.com/{{github_user}}/{{github_repo}}"
+SRC_URI="
+    {{artifacts[0].src_uri}}
+	$(cargo_crate_uris ${CRATES})
+"
+
+LICENSE="Apache-2.0 Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD Boost-1.0 ISC MIT MPL-2.0 Unlicense ZLIB"
+SLOT="0"
+KEYWORDS="*"
+IUSE="doc"
+
+S="${WORKDIR}"
+
+src_compile() {
+	export HELIX_DISABLE_AUTO_GRAMMAR_BUILD=1
+    default
+}
+
+src_install() {
+    rm -rf ${S}/runtime/grammars/sources
+
+    insinto /usr/share/helix
+	doins -r runtime
+ 
+	use doc && dodoc README.md CHANGELOG.md
+	use doc && dodoc -r docs/
+
+	cargo_src_install --path helix-term
+}
+
+pkg_postinst() {
+	elog "You will need to copy /usr/share/helix/runtime into your \$HELIX_RUNTIME"
+	elog "For syntax highlighting and other features. "
+	elog ""
+	elog "Run: "
+	elog "cp -r /usr/share/helix/runtime ~/.config/helix/runtime"
+	elog ""
+	elog "To install tree-sitter grammars for helix run the following:"
+	elog "hx -g fetch"
+	elog "hx -g build"
+}
