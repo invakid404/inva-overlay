@@ -5,21 +5,24 @@ inherit go-module tmpfiles
 
 # These settings are obtained by running ./build_dist.sh shellvars` in
 # the upstream repo.
-VERSION_MINOR="1.24"
-VERSION_SHORT="1.24.2"
-VERSION_LONG="1.24.2-tdce2409b1"
-VERSION_GIT_HASH="dce2409b15837f30885405b8b1d27e7b7fd6bf7a"
+VERSION_MINOR="{{ version.rsplit('.', 1)[0] }}"
+VERSION_SHORT="{{ version }}"
+VERSION_LONG="{{ version }}-t{{ sha[:8] }}"
+VERSION_GIT_HASH="{{ sha }}"
 
 DESCRIPTION="Tailscale vpn client"
 HOMEPAGE="https://tailscale.com"
-SRC_URI="https://github.com/tailscale/tailscale/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-SRC_URI+=" https://dev.gentoo.org/~williamh/dist/${P}-deps.tar.xz"
+SRC_URI="{{artifacts|map(attribute='src_uri')|join(' ')}}"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="*"
 
 RDEPEND="net-firewall/iptables"
+
+post_src_unpack() {
+    mv "${WORKDIR}"/{{ github_user }}-{{ github_repo }}-* "${S}" || die
+}
 
 # This translates the build command from upstream's build_dist.sh to an
 # ebuild equivalent.
