@@ -3,9 +3,11 @@
 EAPI=7
 
 CRATES="
+ahash-0.7.6
+ahash-0.8.2
 aho-corasick-0.7.18
 android_system_properties-0.1.5
-anyhow-1.0.63
+anyhow-1.0.66
 arc-swap-1.5.1
 autocfg-1.1.0
 bitflags-1.3.2
@@ -14,10 +16,10 @@ bumpalo-3.11.0
 bytecount-0.6.3
 bytes-1.2.1
 cassowary-0.3.0
-cc-1.0.73
+cc-1.0.77
 cfg-if-1.0.0
 chardetng-0.1.17
-chrono-0.4.22
+chrono-0.4.23
 clipboard-win-4.4.2
 content_inspector-0.2.4
 core-foundation-sys-0.8.3
@@ -34,20 +36,22 @@ etcetera-0.4.0
 fastrand-1.8.0
 fern-0.6.1
 fnv-1.0.7
-form_urlencoded-1.0.1
-futures-core-0.3.24
-futures-executor-0.3.24
-futures-task-0.3.24
-futures-util-0.3.24
+form_urlencoded-1.1.0
+futures-core-0.3.25
+futures-executor-0.3.25
+futures-task-0.3.25
+futures-util-0.3.25
 fuzzy-matcher-0.3.7
 getrandom-0.2.7
 globset-0.4.9
 grep-matcher-0.1.5
 grep-regex-0.1.10
 grep-searcher-0.1.10
+hashbrown-0.12.3
+hashbrown-0.13.1
 hermit-abi-0.1.19
 iana-time-zone-0.1.47
-idna-0.2.3
+idna-0.3.0
 ignore-0.4.18
 indoc-1.0.7
 instant-0.1.12
@@ -55,21 +59,20 @@ itoa-1.0.3
 js-sys-0.3.59
 lazy_static-1.4.0
 libc-0.2.132
-libloading-0.7.3
+libloading-0.7.4
 lock_api-0.4.8
 log-0.4.17
-lsp-types-0.93.1
-matches-0.1.9
+lsp-types-0.93.2
 memchr-2.5.0
 memmap2-0.5.7
 mio-0.8.4
 num-integer-0.1.45
 num-traits-0.2.15
 num_cpus-1.13.1
-once_cell-1.13.1
+once_cell-1.16.0
 parking_lot-0.12.1
 parking_lot_core-0.9.3
-percent-encoding-2.1.0
+percent-encoding-2.2.0
 pin-project-lite-0.2.9
 pin-utils-0.1.0
 proc-macro2-1.0.43
@@ -80,27 +83,26 @@ rand-0.8.5
 rand_core-0.6.3
 redox_syscall-0.2.16
 redox_users-0.4.3
-regex-1.6.0
+regex-1.7.0
 regex-automata-0.1.10
 regex-syntax-0.6.27
 remove_dir_all-0.5.3
-retain_mut-0.1.9
 ropey-1.5.0
 ryu-1.0.11
 same-file-1.0.6
 scopeguard-1.1.0
-serde-1.0.144
-serde_derive-1.0.144
-serde_json-1.0.85
+serde-1.0.147
+serde_derive-1.0.147
+serde_json-1.0.88
 serde_repr-0.1.9
 signal-hook-0.3.14
 signal-hook-mio-0.2.3
 signal-hook-registry-1.4.0
 signal-hook-tokio-0.3.1
-similar-2.2.0
+similar-2.2.1
 slab-0.4.7
 slotmap-1.0.6
-smallvec-1.9.0
+smallvec-1.10.0
 smartstring-1.0.1
 smawk-0.3.1
 socket2-0.4.7
@@ -109,27 +111,28 @@ str-buf-1.0.6
 str_indices-0.4.0
 syn-1.0.99
 tempfile-3.3.0
-textwrap-0.15.0
-thiserror-1.0.33
-thiserror-impl-1.0.33
+termini-0.1.4
+textwrap-0.16.0
+thiserror-1.0.37
+thiserror-impl-1.0.37
 thread_local-1.1.4
 threadpool-1.8.1
 tinyvec-1.6.0
 tinyvec_macros-0.1.0
-tokio-1.20.1
+tokio-1.22.0
 tokio-macros-1.8.0
-tokio-stream-0.1.9
+tokio-stream-0.1.11
 toml-0.5.9
-tree-sitter-0.20.8
+tree-sitter-0.20.9
 unicase-2.6.0
 unicode-bidi-0.3.8
-unicode-general-category-0.5.1
+unicode-general-category-0.6.0
 unicode-ident-1.0.3
-unicode-linebreak-0.1.2
+unicode-linebreak-0.1.4
 unicode-normalization-0.1.21
-unicode-segmentation-1.9.0
-unicode-width-0.1.9
-url-2.2.2
+unicode-segmentation-1.10.0
+unicode-width-0.1.10
+url-2.3.1
 version_check-0.9.4
 walkdir-2.3.2
 wasi-0.11.0+wasi-snapshot-preview1
@@ -154,9 +157,9 @@ windows_x86_64_msvc-0.36.1
 inherit cargo
 
 DESCRIPTION="Alternative to find that provides sensible defaults for 80% of the use cases"
-HOMEPAGE="https://github.com//"
+HOMEPAGE="https://github.com/helix-editor/helix"
 SRC_URI="
-    https://github.com/helix-editor/helix/releases/download/22.08.1/helix-22.08.1-source.tar.xz -> helix-22.08.1-source.tar.xz
+    https://github.com/helix-editor/helix/archive/e6dad960cf77a3a0fae92ee216d31c9dae59b0ec.tar.gz -> helix-22.08.1.20221124-e6dad960cf77a3a0fae92ee216d31c9dae59b0ec.tar.gz
 	$(cargo_crate_uris ${CRATES})
 "
 
@@ -165,11 +168,16 @@ SLOT="0"
 KEYWORDS="*"
 IUSE="doc"
 
-S="${WORKDIR}"
+src_unpack() {
+	cargo_src_unpack
+	rm -rf "${S}"
+	mv "${WORKDIR}"/helix-e6dad960cf77a3a0fae92ee216d31c9dae59b0ec "${S}" || die
+}
 
 src_compile() {
 	export HELIX_DISABLE_AUTO_GRAMMAR_BUILD=1
-    default
+	
+	cargo_src_compile
 }
 
 src_install() {

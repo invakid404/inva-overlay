@@ -10,7 +10,7 @@ inherit cargo
 DESCRIPTION="Alternative to find that provides sensible defaults for 80% of the use cases"
 HOMEPAGE="https://github.com/{{github_user}}/{{github_repo}}"
 SRC_URI="
-    {{artifacts[0].src_uri}}
+	{{artifacts[0].src_uri}}
 	$(cargo_crate_uris ${CRATES})
 "
 
@@ -19,17 +19,22 @@ SLOT="0"
 KEYWORDS="*"
 IUSE="doc"
 
-S="${WORKDIR}"
+src_unpack() {
+	cargo_src_unpack
+	rm -rf "${S}"
+	mv "${WORKDIR}"/{{ github_repo }}-{{ commit_hash }} "${S}" || die
+}
 
 src_compile() {
 	export HELIX_DISABLE_AUTO_GRAMMAR_BUILD=1
-    default
+
+	cargo_src_compile
 }
 
 src_install() {
-    rm -rf ${S}/runtime/grammars/sources
+	rm -rf ${S}/runtime/grammars/sources
 
-    insinto /usr/share/helix
+	insinto /usr/share/helix
 	doins -r runtime
  
 	use doc && dodoc README.md CHANGELOG.md
