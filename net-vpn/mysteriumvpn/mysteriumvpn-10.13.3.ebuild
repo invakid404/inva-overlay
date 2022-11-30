@@ -25,28 +25,39 @@ src_prepare() {
 
 src_install() {
 	domenu usr/share/applications/mysterium-vpn-desktop.desktop
-	
+
 	local icon_size
 	for icon_size in 16 32 48 64 128 256 512; do
 		pushd "${S}"/usr/share/icons/hicolor/${icon_size}x${icon_size}/apps &>/dev/null || die
 
 		doicon -s ${icon_size} mysterium-vpn-desktop.png
-		
+
 		popd &>/dev/null || die
 	done
 
 	insinto /opt/MysteriumVPN
 	doins -r opt/MysteriumVPN/.
-	
+
 	fperms +x /opt/MysteriumVPN/mysterium-vpn-desktop
-	
-	fperms +x /opt/MysteriumVPN/resources/app.asar.unpacked/node_modules/@mysteriumnetwork/node/bin/linux/x64/myst
-	fperms +x /opt/MysteriumVPN/resources/app.asar.unpacked/node_modules/@mysteriumnetwork/node/bin/linux/x64/myst_supervisor
 
 	fperms 4755 /opt/MysteriumVPN/chrome-sandbox
 	fperms 4755 /opt/MysteriumVPN/chrome_crashpad_handler
-	
+
 	dosym ../../opt/MysteriumVPN/mysterium-vpn-desktop usr/bin/mysterium-vpn-desktop
+
+	local tools_path="/opt/MysteriumVPN/resources/app.asar.unpacked/node_modules/@mysteriumnetwork/node/bin/linux/x64"
+
+	pushd "${S}"/"${tools_path}" &>/dev/null || die
+	tools=$(find . -type f -exec printf "%s" {}"|" \;)
+
+	local IFS_old="${IFS}"
+	IFS="|"
+	for tool in ${tools}; do
+		fperms +x "${tools_path}"${tool#.}
+	done
+	IFS="${IFS_old}"
+
+	popd
 }
 
 pkg_postinst() {
