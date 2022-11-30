@@ -1,0 +1,9 @@
+mysteriumvpn:
+  generator: github-1
+  packages:
+    - mysteriumvpn:
+        github:
+          user: mysteriumnetwork
+          repo: mysterium-vpn-desktop
+          query: releases
+          tarball: mysterium-vpn-desktop_{version}_amd64.deb
