@@ -5,14 +5,12 @@ inherit go-module tmpfiles
 
 # These settings are obtained by running ./build_dist.sh shellvars` in
 # the upstream repo.
-VERSION_MINOR="1.28"
-VERSION_SHORT="1.28.0"
-VERSION_LONG="1.28.0-taabca3a4"
-VERSION_GIT_HASH="aabca3a4c431d24199c1deb25d4684516ead88ca"
+VERSION_SHORT="1.38.4"
+VERSION_LONG="1.38.4-t043a34500"
 
 DESCRIPTION="Tailscale vpn client"
 HOMEPAGE="https://tailscale.com"
-SRC_URI="https://github.com/tailscale/tailscale/tarball/aabca3a4c431d24199c1deb25d4684516ead88ca -> tailscale-1.28.0-aabca3a.tar.gz https://direct.funtoo.org/04/9f/7e/049f7e29a98f71d4f7ef66f7ec1deb8e8a4f65bdd4d806c4cf1abee45d4bafd7cc0af774d2bf89212b9ef3ee61d04e684dca6bc549edbf0e07b831f4a08a76c3 -> tailscale-1.28.0-go-deps.tar.xz"
+SRC_URI="https://github.com/tailscale/tailscale/tarball/043a34500dd2bb07c34e3b28a56cdbc8b5434454 -> tailscale-1.38.4-043a345.tar.gz https://direct.funtoo.org/15/43/e7/1543e7326eac8450a84e9db93ce8708887e10d8ad85d6335cf758eab0e1ae524ec02c3fbc24768e63bbfef7bd033145c925d9221997209acee957660a44849f9 -> tailscale-1.38.4-funtoo-go-bundle-53ba5b255e2c1a6bba1607eb10cc5b752b16713f9ca2384989d0b07015f4ba0890442c8c98e8c94d3bf7c93fc99ff0df644765ca0e8e9a45135ad00071fcc27e.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -28,9 +26,8 @@ post_src_unpack() {
 # ebuild equivalent.
 build_dist() {
 	go build -tags xversion -ldflags "
-		-X tailscale.com/version.Long=${VERSION_LONG}
-		-X tailscale.com/version.Short=${VERSION_SHORT}
-		-X tailscale.com/version.GitCommit=${VERSION_GIT_HASH}" "$@"
+		-X tailscale.com/version.longStamp=${VERSION_LONG}
+		-X tailscale.com/version.shortStamp=${VERSION_SHORT}" "$@"
 }
 
 src_compile() {
