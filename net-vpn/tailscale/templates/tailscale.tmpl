@@ -5,10 +5,8 @@ inherit go-module tmpfiles
 
 # These settings are obtained by running ./build_dist.sh shellvars` in
 # the upstream repo.
-VERSION_MINOR="{{ version.rsplit('.', 1)[0] }}"
 VERSION_SHORT="{{ version }}"
-VERSION_LONG="{{ version }}-t{{ sha[:8] }}"
-VERSION_GIT_HASH="{{ sha }}"
+VERSION_LONG="{{ version }}-t{{ sha[:9] }}"
 
 DESCRIPTION="Tailscale vpn client"
 HOMEPAGE="https://tailscale.com"
@@ -28,9 +26,8 @@ post_src_unpack() {
 # ebuild equivalent.
 build_dist() {
 	go build -tags xversion -ldflags "
-		-X tailscale.com/version.Long=${VERSION_LONG}
-		-X tailscale.com/version.Short=${VERSION_SHORT}
-		-X tailscale.com/version.GitCommit=${VERSION_GIT_HASH}" "$@"
+		-X tailscale.com/version.longStamp=${VERSION_LONG}
+		-X tailscale.com/version.shortStamp=${VERSION_SHORT}" "$@"
 }
 
 src_compile() {
